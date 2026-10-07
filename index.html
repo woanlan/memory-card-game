@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Memory Card Game - Retro Pixel Edition. Trò chơi lật thẻ 8-bit giúp học lập trình Web.">
+    <meta name="theme-color" content="#0a0b1e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Memory Card Game - Học Lập Trình Web</title>
+    <!-- Google Fonts - Retro Pixel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- ===== INTRO OVERLAY ===== -->
+    <div id="intro-overlay" class="intro-overlay">
+        <div id="intro-stage-loading" class="intro-stage active">
+            <div class="intro-loading-box">
+                <div class="intro-loading-track">
+                    <div class="intro-loading-fill" id="intro-loading-fill"></div>
+                </div>
+                <p class="intro-loading-text" id="intro-loading-text">INITIALIZING...</p>
+            </div>
+        </div>
+
+        <div id="intro-stage-studio" class="intro-stage">
+            <div class="intro-studio-box">
+                <div class="intro-crt-lines"></div>
+                <p class="intro-studio-presents">A PIXEL PRODUCTION</p>
+                <h2 class="intro-studio-name">PIXEL STUDIO</h2>
+                <p class="intro-studio-tagline">— est. 2026 —</p>
+            </div>
+        </div>
+
+        <div id="intro-stage-cards" class="intro-stage">
+            <div class="intro-cards-scene" id="intro-cards-scene"></div>
+        </div>
+
+        <div id="intro-stage-logo" class="intro-stage">
+            <div class="intro-logo-box">
+                <span class="intro-logo-icon">🧠</span>
+                <h1 class="intro-logo-title">MEMORY CARD</h1>
+                <p class="intro-logo-sub">Học Lập Trình Web qua Trò Chơi</p>
+            </div>
+        </div>
+
+        <p class="intro-skip-hint" id="intro-skip-hint">Nhấn để bỏ qua ▶</p>
+    </div>
+
+    <!-- ===== ATTRACT MODE OVERLAY ===== -->
+    <div id="attract-overlay" class="attract-overlay">
+        <div class="attract-content">
+            <p class="attract-text">🎮 XEM DEMO</p>
+            <p class="attract-sub">Nhấn phím bất kỳ để chơi</p>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header id="app-header">
+        <div class="header-content">
+            <div class="logo-group">
+                <span class="logo-icon">🧠</span>
+                <div>
+                    <h1 id="main-title">Memory Card</h1>
+                    <p class="subtitle">Học Lập Trình Web qua Trò Chơi</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="btn-how-to-play" class="btn-help" title="Hướng dẫn chơi">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    <span>Hướng dẫn</span>
+                </button>
+                <button id="btn-reset-progress" class="btn-reset" title="Xóa toàn bộ tiến trình">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                    <span>Reset</span>
+                </button>
+                <button id="btn-achievements" class="btn-achievement" title="Thành tựu">
+                    <span>🏅</span>
+                    <span>Thành tựu</span>
+                </button>
+                <button id="btn-highscores" class="btn-help" title="Bảng xếp hạng">
+                    <span>🏆</span>
+                    <span>Xếp hạng</span>
+                </button>
+                <button id="btn-music" class="btn-mute" title="Nhạc nền">🎵</button>
+                <button id="btn-mute" class="btn-mute" title="Tắt/bật âm thanh">🔊</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main id="app-main">
+
+        <!-- ===== WELCOME SCREEN ===== -->
+        <section id="screen-welcome" class="screen active">
+            <div class="welcome-hero">
+                <div class="welcome-badge">🎮 Trò chơi giáo dục</div>
+                <h2 class="welcome-title">
+                    Chào mừng đến với<br>
+                    <span class="welcome-highlight">Memory Card Game</span>
+                </h2>
+                <p class="welcome-desc">
+                    Học các khái niệm <strong>HTML</strong>, <strong>CSS</strong> và <strong>JavaScript</strong> qua trò chơi lật thẻ ghi nhớ. Ghép đúng khái niệm với đoạn code tương ứng!
+                </p>
+                <div class="welcome-actions">
+                    <button id="btn-start-game" class="btn-primary btn-large">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        Bắt đầu chơi
+                    </button>
+                    <button id="btn-open-tutorial" class="btn-secondary btn-large">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        Cách chơi
+                    </button>
+                    <button id="btn-practice-mode" class="btn-ghost btn-large">
+                        🎯 Luyện tập tự do
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feature Cards -->
+            <div class="welcome-features">
+                <div class="feature-card">
+                    <div class="feature-icon">🃏</div>
+                    <h3>Lật & Ghép thẻ</h3>
+                    <p>Tìm cặp thẻ khớp nhau: một thẻ khái niệm và một thẻ code tương ứng.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>3 Cấp độ</h3>
+                    <p>Từ HTML cơ bản → CSS → JavaScript. Hoàn thành để mở khóa level tiếp theo!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>30 cặp kiến thức</h3>
+                    <p>Ghi nhớ 30 cặp khái niệm Web Dev thực tế, giúp bạn học nhanh hơn.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LEVEL SELECTOR SCREEN ===== -->
+        <section id="screen-levels" class="screen">
+            <h2 class="screen-title">Chọn Cấp Độ</h2>
+            <p class="screen-desc">Hoàn thành từng cấp độ để mở khóa cấp tiếp theo!</p>
+
+            <div id="level-cards" class="level-cards">
+                <!-- Level Dễ -->
+                <button id="btn-level-easy" class="level-card" data-level="easy">
+                    <div class="level-badge easy">HTML</div>
+                    <div class="level-icon">🟢</div>
+                    <h3>Dễ</h3>
+                    <p class="level-info">6 cặp thẻ · HTML cơ bản</p>
+                    <div class="level-status">
+                        <span class="status-text">Sẵn sàng</span>
+                    </div>
+                </button>
+
+                <!-- Level Trung bình -->
+                <button id="btn-level-medium" class="level-card locked" data-level="medium" disabled>
+                    <div class="level-badge medium">CSS</div>
+                    <div class="level-icon">🔒</div>
+                    <h3>Trung bình</h3>
+                    <p class="level-info">8 cặp thẻ · CSS cơ bản</p>
+                    <div class="level-status">
+                        <span class="status-text">Đã khóa</span>
+                    </div>
+                </button>
+
+                <!-- Level Khó -->
+                <button id="btn-level-hard" class="level-card locked" data-level="hard" disabled>
+                    <div class="level-badge hard">JS</div>
+                    <div class="level-icon">🔒</div>
+                    <h3>Khó</h3>
+                    <p class="level-info">10 cặp thẻ · JavaScript</p>
+                    <div class="level-status">
+                        <span class="status-text">Đã khóa</span>
+                    </div>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== PRACTICE MODE SCREEN ===== -->
+        <section id="screen-practice" class="screen">
+            <h2 class="screen-title">⚡ Luyện tập tự do</h2>
+            <p class="screen-desc">Tùy chỉnh số lượng thẻ và danh mục để luyện tập!</p>
+
+            <div class="practice-config">
+                <h3>⚙️ Cấu hình</h3>
+
+                <div class="form-group">
+                    <label>Số cặp thẻ: <span id="practice-pair-value">4</span></label>
+                    <input type="range" id="practice-pairs" min="2" max="10" value="4" step="1">
+                </div>
+
+                <div class="form-group">
+                    <label>Danh mục kiến thức</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="practice-html" checked> HTML
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="practice-css" checked> CSS
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="practice-js" checked> JavaScript
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tùy chọn</label>
+                    <div class="toggle-group">
+                        <label class="toggle-item">
+                            <input type="checkbox" id="practice-timer" checked> ⏱ Bộ đếm giờ
+                        </label>
+                        <label class="toggle-item">
+                            <input type="checkbox" id="practice-hints" checked> 💡 Gợi ý
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="margin-top:8px;">
+                    <button id="btn-start-practice" class="btn-primary">Bắt đầu luyện tập 🚀</button>
+                    <button id="btn-back-practice" class="btn-secondary">← Quay lại</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== GAME SCREEN ===== -->
+        <section id="screen-game" class="screen">
+            <div class="game-header">
+                <button id="btn-back" class="btn-back" title="Quay lại chọn level">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <span>Quay lại</span>
+                </button>
+                <button id="btn-hint" class="btn-hint" title="Gợi ý">
+                    💡 <span id="hint-count">3</span>
+                </button>
+                <div class="game-stats">
+                    <div class="stat" id="stat-moves">
+                        <span class="stat-label">Lượt</span>
+                        <span class="stat-value" id="moves-count">0</span>
+                    </div>
+                    <div class="stat" id="stat-pairs">
+                        <span class="stat-label">Cặp đúng</span>
+                        <span class="stat-value" id="pairs-count">0/0</span>
+                    </div>
+                    <div class="stat" id="stat-timer">
+                        <span class="stat-label">Thời gian</span>
+                        <span class="stat-value" id="timer-display">00:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timer-bar-wrap">
+                <div id="timer-bar-fill" class="timer-bar-fill"></div>
+            </div>
+
+            <!-- Game Board - cards will be injected here by JS -->
+            <div id="game-board" class="game-board"></div>
+        </section>
+
+        <!-- ===== WIN MODAL ===== -->
+        <div id="modal-win" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-icon">🎉</div>
+                <h2 id="modal-title">Xuất sắc!</h2>
+                <p id="modal-message">Bạn đã hoàn thành level này!</p>
+                <p id="modal-hints-used" style="font-family:var(--font-pixel);font-size:0.35rem;color:var(--neon-text-muted);margin-bottom:8px;"></p>
+                <div id="star-rating" class="star-rating">
+                    <span class="star" data-star="1">★</span>
+                    <span class="star" data-star="2">★</span>
+                    <span class="star" data-star="3">★</span>
+                </div>
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <span class="modal-stat-label">Lượt đi</span>
+                        <span class="modal-stat-value" id="modal-moves">0</span>
+                    </div>
+                    <div class="modal-stat">
+                        <span class="modal-stat-label">Thời gian</span>
+                        <span class="modal-stat-value" id="modal-time">00:00</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button id="btn-next-level" class="btn-primary">Level tiếp theo →</button>
+                    <button id="btn-replay" class="btn-secondary">Chơi lại</button>
+                    <button id="btn-menu" class="btn-secondary">Về Menu</button>
+                    <button id="btn-share" class="btn-secondary">📤 Chia sẻ kết quả</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== HIGH SCORES MODAL ===== -->
+        <div id="modal-highscores" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-icon">🏆</div>
+                <h2>Bảng Xếp Hạng</h2>
+                <p style="font-family:var(--font-game);color:var(--neon-text-dim);margin-bottom:12px;">Top 5 người chơi xuất sắc nhất</p>
+
+                <div style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;">
+                    <button id="btn-tab-scores" class="btn-primary btn-sm" style="font-size:0.4rem;padding:6px 12px;">Xếp hạng</button>
+                    <button id="btn-tab-stats" class="btn-secondary btn-sm" style="font-size:0.4rem;padding:6px 12px;">Thống kê</button>
+                </div>
+
+                <div id="highscore-list" class="highscore-list">
+                    <!-- JS sẽ render vào đây -->
+                </div>
+                <div id="stats-dashboard-modal" class="stats-container" style="display:none;">
+                    <!-- JS render stats -->
+                </div>
+
+                <div class="modal-actions" style="margin-top:12px;">
+                    <button id="btn-reset-stats" class="btn-ghost btn-sm" style="font-size:0.35rem;">Xóa dữ liệu</button>
+                    <button id="btn-close-highscores" class="btn-secondary">Đóng</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ACHIEVEMENTS MODAL ===== -->
+        <div id="modal-achievements" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-icon">🏅</div>
+                <h2>Thành Tựu</h2>
+                <p style="font-family:var(--font-game);color:var(--neon-text-dim);margin-bottom:12px;">Thu thập tất cả huy hiệu!</p>
+                <div id="achievement-grid" class="achievement-grid">
+                    <!-- JS render -->
+                </div>
+                <div class="modal-stats" id="stats-dashboard" style="display:none;">
+                    <!-- JS render stats here -->
+                </div>
+                <div class="modal-actions" style="margin-top:12px;">
+                    <button id="btn-close-achievements" class="btn-secondary">Đóng</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== HOW TO PLAY TUTORIAL MODAL ===== -->
+        <div id="modal-tutorial" class="modal-overlay">
+            <div class="modal-content tutorial-modal">
+                <button id="btn-close-tutorial" class="tutorial-close" title="Đóng">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <h2 class="tutorial-title">📖 Hướng dẫn chơi</h2>
+
+                <!-- Slide Container -->
+                <div id="tutorial-slides" class="tutorial-slides">
+
+                    <!-- Slide 1 -->
+                    <div class="tutorial-slide active" data-slide="0">
+                        <div class="slide-image-wrapper">
+                            <img src="images/tutorial_step1.png" alt="Bước 1: Lật thẻ" class="slide-image" />
+                        </div>
+                        <div class="slide-step-badge">Bước 1</div>
+                        <h3>Lật thẻ bất kỳ</h3>
+                        <p>Nhấn vào một thẻ trên bảng để lật mở. Mỗi thẻ ẩn chứa một <strong>khái niệm lập trình</strong> hoặc một <strong>đoạn code</strong> tương ứng.</p>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="tutorial-slide" data-slide="1">
+                        <div class="slide-image-wrapper">
+                            <img src="images/tutorial_step2.png" alt="Bước 2: Ghép cặp" class="slide-image" />
+                        </div>
+                        <div class="slide-step-badge">Bước 2</div>
+                        <h3>Ghép cặp Khái niệm ↔ Code</h3>
+                        <p>Lật 2 thẻ mỗi lượt. Nếu thẻ <strong>khái niệm</strong> khớp với thẻ <strong>code</strong> (ví dụ: "Thẻ tạo liên kết" ↔ <code>&lt;a&gt;</code>), cặp thẻ sẽ sáng xanh và giữ nguyên!</p>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="tutorial-slide" data-slide="2">
+                        <div class="slide-image-wrapper">
+                            <img src="images/tutorial_step3.png" alt="Bước 3: Hoàn thành" class="slide-image" />
+                        </div>
+                        <div class="slide-step-badge">Bước 3</div>
+                        <h3>Hoàn thành & Mở khóa</h3>
+                        <p>Ghép hết tất cả các cặp thẻ để chiến thắng! 🎉 Hoàn thành level hiện tại sẽ <strong>mở khóa level tiếp theo</strong>. Cố gắng hoàn thành với ít lượt nhất!</p>
+                    </div>
+                </div>
+
+                <!-- Slide Indicators & Navigation -->
+                <div class="tutorial-nav">
+                    <div class="tutorial-dots">
+                        <button class="tutorial-dot active" data-dot="0" title="Bước 1"></button>
+                        <button class="tutorial-dot" data-dot="1" title="Bước 2"></button>
+                        <button class="tutorial-dot" data-dot="2" title="Bước 3"></button>
+                    </div>
+                    <div class="tutorial-buttons">
+                        <button id="btn-tutorial-prev" class="btn-secondary btn-sm" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            Trước
+                        </button>
+                        <button id="btn-tutorial-next" class="btn-primary btn-sm">
+                            Tiếp
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tip box -->
+                <div class="tutorial-tip">
+                    <span class="tip-icon">💡</span>
+                    <span>Mẹo: Cố gắng ghi nhớ vị trí các thẻ đã lật để ghép nhanh hơn!</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="app-footer">
+        <p>MEMORY CARD GAME &copy; 2026 · PIXEL EDITION</p>
+    </footer>
+
+    <!-- Countdown Overlay -->
+    <div id="countdown-overlay" class="countdown-overlay">
+        <div id="countdown-number" class="countdown-number">3</div>
+    </div>
+
+    <!-- Scanlines CRT Overlay -->
+    <div id="scanlines-overlay" aria-hidden="true"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
